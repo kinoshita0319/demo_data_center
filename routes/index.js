@@ -27,7 +27,7 @@ router.post("/", function(req, res, next) {
   console.log("MBMS_id: ", j_data.MBMS_id);
   exec("ls -l ./", function(err, stdout, stderr) {
     /* some process */
-    console.log(stdout);
+    console.log("stdout: ", stdout);
   });
   var pk = fs.readFileSync(
     "/d/home/site/wwwroot/pks/pk_" + j_data.MBMS_id + ".pem",
