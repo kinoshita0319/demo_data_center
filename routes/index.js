@@ -32,10 +32,10 @@ router.post("/", function(req, res, next) {
       "/home/site/wwwroot/pks/pk_" + j_data.MBMS_id + ".pem",
       "utf8"
     );
-    var verify = verify.verify(pk, req.body.signature, "base64");
-    console.log("verify: ", verify);
+    var result = verify.verify(pk, req.body.signature, "base64");
+    console.log("result: ", result);
 
-    if (verify == true) {
+    if (result == true) {
       var dt = new Date();
       var formatted = dt.toFormat("YYYYMMDDHH24MISS");
       //console.log("formatted: ", formatted);
