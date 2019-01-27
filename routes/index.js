@@ -28,27 +28,27 @@ router.post("/", function(req, res, next) {
   exec("pwd/", function(err, stdout, stderr) {
     /* some process */
     console.log("stdout: ", stdout);
-  });
-  var pk = fs.readFileSync(
-    "/d/home/site/wwwroot/pks/pk_" + j_data.MBMS_id + ".pem",
-    "utf8"
-  );
-  var verify = verify.verify(pk, req.body.signature, "base64");
-  console.log("verify: ", verify);
-
-  if (verify == true) {
-    var dt = new Date();
-    var formatted = dt.toFormat("YYYYMMDDHH24MISS");
-    //console.log("formatted: ", formatted);
-
-    //fs.writeFile("./data_files/" + formatted + ".txt", req.body.data);
-    fs.writeFile(
-      "/d/home/site/wwwroot/data_files/" + formatted + ".txt",
-      req.body.data
+    var pk = fs.readFileSync(
+      "/d/home/site/wwwroot/pks/pk_" + j_data.MBMS_id + ".pem",
+      "utf8"
     );
-  }
+    var verify = verify.verify(pk, req.body.signature, "base64");
+    console.log("verify: ", verify);
 
-  res.send("POST request to the homepage");
+    if (verify == true) {
+      var dt = new Date();
+      var formatted = dt.toFormat("YYYYMMDDHH24MISS");
+      //console.log("formatted: ", formatted);
+
+      //fs.writeFile("./data_files/" + formatted + ".txt", req.body.data);
+      fs.writeFile(
+        "/d/home/site/wwwroot/data_files/" + formatted + ".txt",
+        req.body.data
+      );
+    }
+
+    res.send("POST request to the homepage");
+  });
 });
 
 module.exports = router;
