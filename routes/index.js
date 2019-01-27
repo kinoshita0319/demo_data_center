@@ -23,6 +23,7 @@ router.post("/", function(req, res, next) {
   verify.write(req.body.data);
   verify.end();
   //var pk = fs.readFileSync("./pks/pk_" + j_data.MBMS_id + ".pem", "utf8");
+  console.log("before fs");
   var pk = fs.readFileSync(
     "/d/home/site/wwwroot/pks/pk_" + j_data.MBMS_id + ".pem",
     "utf8"
