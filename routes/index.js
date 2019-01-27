@@ -12,7 +12,7 @@ router.get("/", function(req, res, next) {
 
 router.post("/", function(req, res, next) {
   // リクエストボディを出力
-  //console.log("body: ", req.body);
+  console.log("body: ", req.body);
   //console.log("data: ", req.body.data);
   //console.log("signedData: ", req.body.signedData);
   var j_data = JSON.parse(req.body.data);
