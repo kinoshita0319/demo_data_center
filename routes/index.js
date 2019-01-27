@@ -4,7 +4,6 @@ var sign = cryptor.createSign("RSA-SHA256");
 var fs = require("fs");
 require("date-utils");
 var router = express.Router();
-var exec = require("child_process").exec;
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -25,30 +24,26 @@ router.post("/", function(req, res, next) {
   verify.end();
   //var pk = fs.readFileSync("./pks/pk_" + j_data.MBMS_id + ".pem", "utf8");
   console.log("MBMS_id: ", j_data.MBMS_id);
-  exec("pwd/", function(err, stdout, stderr) {
-    /* some process */
-    console.log("stdout: ", stdout);
-    var pk = fs.readFileSync(
-      "/home/site/wwwroot/pks/pk_" + j_data.MBMS_id + ".pem",
-      "utf8"
+  var pk = fs.readFileSync(
+    "/home/site/wwwroot/pks/pk_" + j_data.MBMS_id + ".pem",
+    "utf8"
+  );
+  var result = verify.verify(pk, req.body.signature, "base64");
+  console.log("result: ", result);
+
+  if (result == true) {
+    var dt = new Date();
+    var formatted = dt.toFormat("YYYYMMDDHH24MISS");
+    //console.log("formatted: ", formatted);
+
+    //fs.writeFile("./data_files/" + formatted + ".txt", req.body.data);
+    fs.writeFileSync(
+      "/home/site/wwwroot/data_files/" + formatted + ".txt",
+      req.body.data
     );
-    var result = verify.verify(pk, req.body.signature, "base64");
-    console.log("result: ", result);
+  }
 
-    if (result == true) {
-      var dt = new Date();
-      var formatted = dt.toFormat("YYYYMMDDHH24MISS");
-      //console.log("formatted: ", formatted);
-
-      //fs.writeFile("./data_files/" + formatted + ".txt", req.body.data);
-      fs.writeFile(
-        "/home/site/wwwroot/data_files/" + formatted + ".txt",
-        req.body.data
-      );
-    }
-
-    res.send("POST request to the homepage");
-  });
+  res.send("POST request to the homepage");
 });
 
 module.exports = router;
