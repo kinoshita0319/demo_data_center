@@ -29,7 +29,7 @@ router.post("/", function(req, res, next) {
     /* some process */
     console.log("stdout: ", stdout);
     var pk = fs.readFileSync(
-      "/d/home/site/wwwroot/pks/pk_" + j_data.MBMS_id + ".pem",
+      "/home/site/wwwroot/pks/pk_" + j_data.MBMS_id + ".pem",
       "utf8"
     );
     var verify = verify.verify(pk, req.body.signature, "base64");
@@ -42,7 +42,7 @@ router.post("/", function(req, res, next) {
 
       //fs.writeFile("./data_files/" + formatted + ".txt", req.body.data);
       fs.writeFile(
-        "/d/home/site/wwwroot/data_files/" + formatted + ".txt",
+        "/home/site/wwwroot/data_files/" + formatted + ".txt",
         req.body.data
       );
     }
