@@ -1,10 +1,24 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const fs = require("fs");
-require("date-utils");
+var createError = require("http-errors");
+var express = require("express");
+var path = require("path");
+var cookieParser = require("cookie-parser");
+var logger = require("morgan");
+var bodyParser = require("body-parser");
 
-const app = express();
+var indexRouter = require("./routes/index");
+var usersRouter = require("./routes/users");
 
+var app = express();
+
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
+
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
 // urlencodedとjsonは別々に初期化する
 app.use(
   bodyParser.urlencoded({
@@ -13,22 +27,23 @@ app.use(
 );
 app.use(bodyParser.json());
 
-app.listen(8080);
-console.log("Server is online.");
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
 
-app.post("/", function(req, res) {
-  // リクエストボディを出力
-  console.log(req.body);
-  // パラメータ名、nameを出力
-  console.log(req.body.battery_charge);
-
-  var dt = new Date();
-  var formatted = dt.toFormat("YYYYMMDDHH24MISS");
-  console.log(formatted);
-
-  fs.writeFile("" + formatted + ".txt", JSON.stringify(req.body));
-  //fs.appendFile("" + formatted + ".txt", "\n");
-  //fs.appendFile("" + formatted + ".txt", req.body.battery_charge);
-
-  res.send("POST request to the homepage");
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
 });
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render("error");
+});
+
+module.exports = app;
