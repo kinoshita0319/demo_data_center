@@ -27,7 +27,8 @@ var signature = sign.sign(sk, "base64");
 
 //オプションを定義
 var options = {
-  url: "http://localhost:3000",
+  //url: "http://localhost:3000",
+  url: "https://demo-data-center.azurewebsites.net/",
   method: "POST",
   headers: headers,
   json: true,

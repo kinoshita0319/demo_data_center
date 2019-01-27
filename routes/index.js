@@ -31,7 +31,11 @@ router.post("/", function(req, res, next) {
     var formatted = dt.toFormat("YYYYMMDDHH24MISS");
     //console.log("formatted: ", formatted);
 
-    fs.writeFile("./data_files/" + formatted + ".txt", req.body.data);
+    //fs.writeFile("./data_files/" + formatted + ".txt", req.body.data);
+    fs.writeFile(
+      "/d/home/site/wwwroot/data_files/" + formatted + ".txt",
+      req.body.data
+    );
   }
 
   res.send("POST request to the homepage");
