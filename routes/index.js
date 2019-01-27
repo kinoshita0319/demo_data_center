@@ -4,6 +4,7 @@ var sign = cryptor.createSign("RSA-SHA256");
 var fs = require("fs");
 require("date-utils");
 var router = express.Router();
+var exec = require("child_process").exec;
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -23,7 +24,11 @@ router.post("/", function(req, res, next) {
   verify.write(req.body.data);
   verify.end();
   //var pk = fs.readFileSync("./pks/pk_" + j_data.MBMS_id + ".pem", "utf8");
-  console.log("before fs");
+  console.log("MBMS_id: ", j_data.MBMS_id);
+  exec("ls -l ./", function(err, stdout, stderr) {
+    /* some process */
+    console.log(stdout);
+  });
   var pk = fs.readFileSync(
     "/d/home/site/wwwroot/pks/pk_" + j_data.MBMS_id + ".pem",
     "utf8"
