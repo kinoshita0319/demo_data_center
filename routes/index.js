@@ -10,14 +10,6 @@ router.get("/", function(req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-router.get("/test", function(req, res, next) {
-  res.render("index", { title: "Express" });
-});
-
-router.post("/test", function(req, res, next) {
-  res.render("index", { title: "Express" });
-});
-
 router.post("/", function(req, res, next) {
   // リクエストボディを出力
   console.log("body: ", req.body);

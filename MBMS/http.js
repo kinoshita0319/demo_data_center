@@ -38,6 +38,6 @@ var options = {
 //リクエスト送信
 request(options, function(error, response, body) {
   //コールバックで色々な処理
-  console.log("response: ", response);
+  //console.log("response: ", response);
   console.log("statusCode: " + response.statusCode);
 });
