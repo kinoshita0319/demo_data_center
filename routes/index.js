@@ -10,6 +10,10 @@ router.get("/", function(req, res, next) {
   res.render("index", { title: "Express" });
 });
 
+router.post("/test", function(req, res, next) {
+  res.render("index", { title: "Express" });
+});
+
 router.post("/", function(req, res, next) {
   // リクエストボディを出力
   console.log("body: ", req.body);
@@ -36,7 +40,7 @@ router.post("/", function(req, res, next) {
     var formatted = dt.toFormat("YYYYMMDDHH24MISS");
     //console.log("formatted: ", formatted);
 
-    //fs.writeFile("./data_files/" + formatted + ".txt", req.body.data);
+    //fs.writeFileSync("./data_files/" + formatted + ".txt", req.body.data);
     fs.writeFileSync(
       "/home/site/wwwroot/data_files/" + formatted + ".txt",
       req.body.data
