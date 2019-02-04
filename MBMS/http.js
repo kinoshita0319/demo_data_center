@@ -35,12 +35,13 @@ var signature = sign.sign(sk, "base64");
 //httpsリクエスト作成
 var options = {
   //url: "http://localhost:3000",
-  url: "http://demo-data-center.azurewebsites.net/",
+  url: "https://demo-data-center.azurewebsites.net/",
   method: "POST",
   headers: headers,
   json: true,
   form: { data: s_data, signature: signature }
 };
+console.log("url: " + options.url);
 
 //リクエスト送信
 request(options, function(error, response, body) {
