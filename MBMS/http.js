@@ -35,7 +35,7 @@ var signature = sign.sign(sk, "base64");
 //httpsリクエスト作成
 var options = {
   //url: "http://localhost:3000",
-  url: "https://demo-data-center.azurewebsites.net/",
+  url: "http://demo-data-center.azurewebsites.net/",
   method: "POST",
   headers: headers,
   json: true,
