@@ -10,6 +10,8 @@ router.get("/", function(req, res, next) {
 });
 
 router.post("/", function(req, res, next) {
+  var dt = new Date();
+  var formatted = dt.toFormat("YYYYMMDDHH24MISS");
   // リクエストボディを出力
   console.log("body: ", req.body);
   var j_data = JSON.parse(req.body.data);
@@ -30,9 +32,6 @@ router.post("/", function(req, res, next) {
 
   //署名検証結果が正の場合、ファイル格納
   if (result == true) {
-    var dt = new Date();
-    var formatted = dt.toFormat("YYYYMMDDHH24MISS");
-
     //fs.writeFileSync("./data_files/" + formatted + ".txt", req.body.data);
     fs.writeFileSync(
       "/home/site/wwwroot/data_files/" + formatted + ".txt",
