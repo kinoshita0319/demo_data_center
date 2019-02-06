@@ -1,9 +1,8 @@
 var request = require("request");
 var fs = require("fs");
 var cryptor = require("crypto");
-//var sign = cryptor.createSign("RSA-SHA256");
-var sign = cryptor.createSign("SHA256");
 require("date-utils");
+var sign = cryptor.createSign("SHA256");
 
 //ヘッダーを定義
 var headers = {
@@ -35,6 +34,7 @@ sign.update(s_data);
 //var sk = fs.readFileSync("./sk_" + data.MBMS_id + ".pem", "utf8");
 var sk = fs.readFileSync("./sk.pem", "utf8");
 var signature = sign.sign(sk, "base64");
+
 //httpsリクエスト作成
 var options = {
   //url: "http://localhost:3000",

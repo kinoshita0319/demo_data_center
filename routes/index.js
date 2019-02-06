@@ -10,14 +10,15 @@ router.get("/", function(req, res, next) {
 });
 
 router.post("/", function(req, res, next) {
+  //受信日時出力
   var dt = new Date();
   var formatted = dt.toFormat("YYYYMMDDHH24MISS");
+
   // リクエストボディを出力
   console.log("body: ", req.body);
   var j_data = JSON.parse(req.body.data);
 
   //署名検証
-  //var verify = cryptor.createVerify("RSA-SHA256");
   var verify = cryptor.createVerify("SHA256");
   verify.write(req.body.data);
   verify.end();
