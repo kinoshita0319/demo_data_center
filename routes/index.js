@@ -20,11 +20,11 @@ router.post("/", function(req, res, next) {
   verify.write(req.body.data);
   verify.end();
   //var pk = fs.readFileSync("./pks/pk_" + j_data.MBMS_id + ".pem", "utf8");
-  console.log("MBMS_id: ", j_data.MBMS_id);
-  var pk = fs.readFileSync(
+  /*  var pk = fs.readFileSync(
     "/home/site/wwwroot/pks/pk_" + j_data.MBMS_id + ".pem",
     "utf8"
-  );
+  );*/
+  var pk = fs.readFileSync("/home/site/wwwroot/pks/pk.pem", "utf8");
   var result = verify.verify(pk, req.body.signature, "base64");
   console.log("result: ", result);
 
