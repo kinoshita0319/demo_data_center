@@ -2,7 +2,12 @@ var express = require("express");
 var cryptor = require("crypto");
 var fs = require("fs");
 require("date-utils");
+var request = require("request");
 var router = express.Router();
+
+//実行環境によって以下を変える。
+var r_dir = "./";
+//var r_dir = "/home/site/wwwroot/";
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -16,28 +21,51 @@ router.post("/", function(req, res, next) {
 
   // リクエストボディを出力
   console.log("body: ", req.body);
-  var j_data = JSON.parse(req.body.data);
 
   //署名検証
   var verify = cryptor.createVerify("SHA256");
   verify.write(req.body.data);
   verify.end();
-  //var pk = fs.readFileSync("./pks/pk.pem", "utf8");
-  /*  var pk = fs.readFileSync(
-    "/home/site/wwwroot/pks/pk_" + j_data.MBMS_id + ".pem",
-    "utf8"
-  );*/
-  var pk = fs.readFileSync("/home/site/wwwroot/pks/pk.pem", "utf8");
+  var pk = fs.readFileSync(r_dir + "pks/pk.pem", "utf8");
   var result = verify.verify(pk, req.body.signature, "base64");
   console.log("result: ", result);
 
   //署名検証結果が正の場合、ファイル格納
   if (result == true) {
-    //fs.writeFileSync("./data_files/" + formatted + ".txt", req.body.data);
-    fs.writeFileSync(
-      "/home/site/wwwroot/data_files/" + formatted + ".txt",
-      req.body.data
+    fs.writeFile(
+      r_dir + "data_files/11111_" + formatted + ".txt",
+      JSON.stringify(req.body)
     );
+
+    // Hyperledger FabricのREST APIを使用してdataとsignatureを書き込む。
+    var headers = {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    };
+
+    var data = {
+      $class: "org.example.biznet.Data",
+      dataId: "11111_" + formatted,
+      data: req.body.data,
+      signature: req.body.signature,
+      webApp: "resource:org.example.biznet.WebApp#11111"
+    };
+
+    var options = {
+      url: "http://13.71.157.246:3000/api/org.example.biznet.Data",
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(data)
+    };
+
+    function callback(error, response, body) {
+      console.log(response.statusCode);
+      if (!error && response.statusCode == 200) {
+        console.log(body);
+      }
+    }
+
+    request(options, callback);
   }
 
   res.send("POST request to the homepage");
