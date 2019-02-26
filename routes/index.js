@@ -6,8 +6,8 @@ var request = require("request");
 var router = express.Router();
 
 //実行環境によって以下を変える。
-var r_dir = "./";
-//var r_dir = "/home/site/wwwroot/";
+//var r_dir = "./";
+var r_dir = "/home/site/wwwroot/";
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
