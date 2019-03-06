@@ -4,11 +4,8 @@ var fs = require("fs");
 
 /* GET users listing. */
 router.get("/", function(req, res, next) {
-  //実行環境によって以下を変える。
-  var r_dir = "./";
-  //var r_dir = "/home/site/wwwroot/";
-
-  var fileURL = r_dir + "shell/test_shell";
+  var fileName = fs.readFileSync(r_dir + "shell/latestShell", "utf8");
+  var fileURL = r_dir + "shell/" + fileName;
 
   res.download(fileURL, function(err) {
     if (err) {

@@ -12,6 +12,11 @@ var shellRouter = require("./routes/shell");
 
 var app = express();
 
+r_dir = "/home/site/wwwroot/";
+if (process.env.npm_package_config_r_dir != undefined) {
+  r_dir = process.env.npm_package_config_r_dir;
+}
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");

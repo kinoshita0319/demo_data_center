@@ -4,19 +4,13 @@ var fs = require("fs");
 
 /* GET users listing. */
 router.get("/", function(req, res, next) {
-  //実行環境によって以下を変える。
-  var r_dir = "/home/site/wwwroot/";
-  console.log("r_dir: ", process.env.npm_package_config_r_dir);
-  if (process.env.npm_package_config_r_dir != undefined) {
-    r_dir = process.env.npm_package_config_r_dir;
-  }
-
   var fileName = fs.readFileSync(r_dir + "firmware/latestFirmware", "utf8");
   var fileURL = r_dir + "firmware/" + fileName;
 
   //res.attachment(fileURL);
   res.download(fileURL, function(err) {
     if (err) {
+      res.sendStatus(err.status);
       console.log("error.");
     } else {
       console.log("download for firmware done.");
