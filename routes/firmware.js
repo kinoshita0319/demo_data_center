@@ -6,6 +6,7 @@ var fs = require("fs");
 router.get("/", function(req, res, next) {
   //実行環境によって以下を変える。
   var r_dir = "/home/site/wwwroot/";
+  console.log("r_dir: ", process.env.npm_package_config_r_dir);
   if (process.env.npm_package_config_r_dir != undefined) {
     r_dir = process.env.npm_package_config_r_dir;
   }
