@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "config": {
-    "test": "true"
-  },
-  "config": {
     "r_dir": "./"
   },
   "scripts": {
